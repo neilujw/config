@@ -2,7 +2,10 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("f360" (filename . "~/ws/f360/mix.exs")
+(("emacs" (filename . "~/.emacs.d/init.el")
+ (front-context-string . "(menu-bar-mode -") (rear-context-string)
+ (position . 1) (last-modified 26554 10291 593119 745000))
+("f360" (filename . "~/ws/f360/mix.exs")
  (front-context-string . "defmodule F360.M") (rear-context-string)
  (position . 1) (last-modified 26554 10145 273839 29000))
 )

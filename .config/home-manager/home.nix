@@ -35,7 +35,10 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.elixir
-    pkgs.inotify-tools
+    pkgs.elixir-ls # emacs
+    pkgs.tree-sitter # emacs
+    pkgs.inotify-tools # phoenix
+    pkgs.gcc # emacs
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
