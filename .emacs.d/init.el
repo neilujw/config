@@ -4,16 +4,21 @@
 
 (setq bookmark-save-flag 1)
 
+(setq display-time-24hr-format t)
+(setq display-time-default-load-average nil)
+(display-time-mode 1)
+
 (require 'package)
 (add-to-list 'package-archives  '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
 (package-initialize)
 
-;; From mastering emacs - shortcut to make switching between buffers
-;; easier M-o instead of C-x o
 (global-set-key (kbd "M-o")
 		'other-window)
+
+(global-set-key (kbd "C-.")
+		'company-complete)
 
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
@@ -49,10 +54,6 @@
   ;; load default config
   (require 'smartparens-config))
 
-;; org mode
-(setq display-time-24hr-format t)
-(setq display-time-default-load-average nil)
-(display-time-mode 1)
 
 (use-package nix-mode
   :ensure t
@@ -172,18 +173,6 @@
 (use-package
  elixir-ts-mode
  :hook (elixir-ts-mode . eglot-ensure)
- (elixir-ts-mode
-  .
-  (lambda ()
-    (push '(">=" . ?\u2265) prettify-symbols-alist)
-    (push '("<=" . ?\u2264) prettify-symbols-alist)
-    (push '("!=" . ?\u2260) prettify-symbols-alist)
-    (push '("==" . ?\u2A75) prettify-symbols-alist)
-    (push '("=~" . ?\u2245) prettify-symbols-alist)
-    (push '("<-" . ?\u2190) prettify-symbols-alist)
-    (push '("->" . ?\u2192) prettify-symbols-alist)
-    (push '("<-" . ?\u2190) prettify-symbols-alist)
-    (push '("|>" . ?\u25B7) prettify-symbols-alist)))
  (before-save . eglot-format))
 
 ;; make eldoc not pop up the minibuffer
@@ -287,14 +276,6 @@
 
 (use-package dumb-jump
   :ensure t)
-
-(defun sudo ()
-  "Use TRAMP to `sudo' the current buffer."
-  (interactive)
-  (when buffer-file-name
-    (find-alternate-file
-     (concat "/sudo:root@localhost:"
-             buffer-file-name))))
 
 (defun ii/decode-jwt (start end &optional jwt)
   "Decode JWT in region and print to help buffer."
