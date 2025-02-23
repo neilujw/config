@@ -175,6 +175,9 @@
  :hook (elixir-ts-mode . eglot-ensure)
  (before-save . eglot-format))
 
+(add-hook 'elixir-mode-hook
+          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+
 ;; make eldoc not pop up the minibuffer
 (setq eldoc-echo-area-use-multiline-p nil)
 
@@ -258,8 +261,6 @@
   :init
   (global-set-key (kbd "C-c g") 'helm-git-grep))
 
-(add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
 (use-package which-key
   :ensure t
