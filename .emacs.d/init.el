@@ -27,6 +27,12 @@
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-ts-mode))
 
+(add-to-list 'display-buffer-alist
+  '("\\*e?shell\\*" display-buffer-in-direction
+    (direction . bottom)
+    (window . root)
+    (window-height . 0.2)))
+
 (winner-mode)
 
 (use-package nov
