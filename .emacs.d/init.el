@@ -20,6 +20,9 @@
 (global-set-key (kbd "C-.")
 		'company-complete)
 
+(global-set-key (kbd "C-7")
+		'undo)
+
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-ts-mode))
@@ -275,8 +278,6 @@
 (use-package envrc
   :ensure t)
 
-(use-package dumb-jump
-  :ensure t)
 
 (defun ii/decode-jwt (start end &optional jwt)
   "Decode JWT in region and print to help buffer."
