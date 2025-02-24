@@ -231,6 +231,9 @@
   (setq magit-refresh-status-buffer nil)
   (setq magit-list-refs-sortby "-committerdate"))
 
+(setq magit-display-buffer-function ' magit-display-buffer-fullframe-status-v1)
+(setq magit-bury-buffer-function 'magit-restore-window-configuration)
+
 
 (use-package web-mode
   :defer t
