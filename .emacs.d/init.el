@@ -8,6 +8,9 @@
 (setq display-time-default-load-average nil)
 (display-time-mode 1)
 
+(global-hl-line-mode 1) ; highlight line
+(global-auto-revert-mode 1) ; keep buffer up to date
+
 (setq  ibuffer-saved-filter-groups
    '(("default"
       ("f360" (filename . "ws/f360"))
@@ -21,6 +24,7 @@
 	    (ibuffer-switch-to-saved-filter-groups "default")))
 
 (require 'package)
+
 (add-to-list 'package-archives  '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
@@ -43,10 +47,10 @@
 (add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-ts-mode))
 
 (add-to-list 'display-buffer-alist
-  '("\\*e?shell\\*" display-buffer-in-direction
-    (direction . bottom)
-    (window . root)
-    (window-height . 0.2)))
+    '("\\*e?shell\\*" display-buffer-in-direction
+       (direction . bottom)
+       (window . root)
+       (window-height . 0.2)))
 
 (winner-mode)
 
