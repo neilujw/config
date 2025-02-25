@@ -8,6 +8,18 @@
 (setq display-time-default-load-average nil)
 (display-time-mode 1)
 
+(setq  ibuffer-saved-filter-groups
+   '(("default"
+      ("f360" (filename . "ws/f360"))
+      ("other elixir" (file-extension . "exs?"))
+      ("emacs"
+       (or (file-extension . "el") (name . "^\\*Messages\\*$")))
+      ("magit" (name . "^magit")))))
+
+(add-hook 'ibuffer-mode-hook
+	  (lambda ()
+	    (ibuffer-switch-to-saved-filter-groups "default")))
+
 (require 'package)
 (add-to-list 'package-archives  '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
