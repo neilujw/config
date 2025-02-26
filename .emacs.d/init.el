@@ -8,6 +8,9 @@
 (setq display-time-default-load-average nil)
 (display-time-mode 1)
 
+(tab-bar-mode 1)
+(setq tab-bar-show 1) ; only show tab bars if there is more than one tab
+
 (global-hl-line-mode 1) ; highlight line
 (global-auto-revert-mode 1) ; keep buffer up to date
 
