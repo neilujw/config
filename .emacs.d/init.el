@@ -11,8 +11,16 @@
 (tab-bar-mode 1)
 (setq tab-bar-show 1) ; only show tab bars if there is more than one tab
 
+(setq imenu-flatten 'prefix)
+(setq imenu-level-separator ".")
+(setq imenu-auto-rescan 1)
+
 (global-hl-line-mode 1) ; highlight line
 (global-auto-revert-mode 1) ; keep buffer up to date
+
+(global-completion-preview-mode 1)
+
+; (setq project-mode-line nil)
 
 (setq  ibuffer-saved-filter-groups
    '(("default"
@@ -39,8 +47,14 @@
 (global-set-key (kbd "M-o")
 		'other-window)
 
+;; (global-set-key (kbd "C-.")
+;; 		'company-complete)
+
 (global-set-key (kbd "C-.")
-		'company-complete)
+		'completion-at-point)
+
+(global-set-key (kbd "M-n")
+		'flymake-show-buffer-diagnostics)
 
 (global-set-key (kbd "C-7")
 		'undo)
@@ -54,6 +68,14 @@
        (direction . bottom)
        (window . root)
        (window-height . 0.2)))
+
+(add-to-list 'display-buffer-alist
+    '("\\*Flymake.*\\*" (display-buffer-reuse-window display-buffer-in-side-window)
+       (side . bottom)
+       (slot . 1)
+       (window-height . 0.15)))
+
+; M-x window-toggle-side-windows (show/hide side windows!)
 
 (winner-mode)
 
@@ -267,13 +289,13 @@
   :defer t
   :ensure t)
 
-(use-package company
-  :defer t
-  :ensure t
-  :config
-  (setq company-idle-delay 0.00001)
-  :init
-  (add-hook 'after-init-hook 'global-company-mode))
+;; (use-package company
+;;   :defer t
+;;   :ensure t
+;;   :config
+;;   (setq company-idle-delay 0.00001)
+;;   :init
+;;   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package helm
   :ensure t
