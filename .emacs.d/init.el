@@ -15,6 +15,7 @@
 (setq imenu-level-separator ".")
 (setq imenu-auto-rescan 1)
 
+;(hs-minor-mode 1)
 (global-hl-line-mode 1) ; highlight line
 (global-auto-revert-mode 1) ; keep buffer up to date
 
@@ -100,12 +101,12 @@
   (diff-hl-flydiff-mode))
 
 ;; insert closing params etc
-(use-package smartparens
-  :ensure  smartparens ;; install the package
-  :hook (prog-mode text-mode markdown-mode elixir-ts-mode) ;; add `smartparens-mode` to these hooks
-  :config
-  ;; load default config
-  (require 'smartparens-config))
+;; (use-package smartparens
+;;   :ensure  smartparens ;; install the package
+;;   :hook (prog-mode text-mode markdown-mode elixir-ts-mode) ;; add `smartparens-mode` to these hooks
+;;   :config
+;;   ;; load default config
+;;   (require 'smartparens-config))
 
 
 (use-package nix-mode
@@ -353,20 +354,4 @@
 
 
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(company diff-hl dockerfile-mode dumb-jump envrc erlang exunit
-	     flycheck flymake-json groovy-mode helm helm-git-grep
-	     hurl-mode jq-format json-mode magit markdown-mode minions
-	     nix-mode nov smartparens terraform-mode tree-sitter-langs
-	     treemacs web-mode yaml-mode zenburn-theme)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-black ((t (:background "MediumPurple2" :foreground "MediumPurple2")))))
+

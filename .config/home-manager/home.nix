@@ -39,6 +39,7 @@
     pkgs.tree-sitter # emacs
     pkgs.inotify-tools # phoenix
     pkgs.gcc # emacs
+    pkgs.tmux
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
