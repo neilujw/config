@@ -23,7 +23,7 @@
 
 ; (setq project-mode-line nil)
 
-(load-file "ibuffer-groups.el")
+(load-file "~/.emacs.d/ibuffer-groups.el")
 
 (require 'package)
 
