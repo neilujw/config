@@ -35,8 +35,8 @@
 (global-set-key (kbd "C-x C-b")
 		'ibuffer)
 
-(global-set-key (kbd "M-o")
-		'other-window)
+;(global-set-key (kbd "M-o")
+;		'other-window)
 
 ;; (global-set-key (kbd "C-.")
 ;; 		'company-complete)
@@ -318,6 +318,24 @@
   :ensure t
   :config
   (minions-mode))
+
+(use-package ace-window
+  :ensure t
+  :bind
+  (:map global-map
+	("M-o" . ace-window)
+	("M-p" . ace-swap-window))
+  :config
+  (setq aw-scope 'frame
+	aw-ignore-current t))
+
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-project-search-path '("~/ws/" "~/config/"))
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("C-c p" . projectile-command-map)))
 
 (use-package envrc
   :ensure t)
