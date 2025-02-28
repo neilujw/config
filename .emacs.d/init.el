@@ -362,4 +362,7 @@
 
 
 ;;; init.el ends here
+; level of treesitter feature, 1-4
+(custom-set-variables
+ '(treesit-font-lock-level 4))
 
