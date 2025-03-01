@@ -15,6 +15,7 @@
 (setq imenu-level-separator ".")
 (setq imenu-auto-rescan 1)
 
+
 ;(hs-minor-mode 1)
 (global-hl-line-mode 1) ; highlight line
 (global-auto-revert-mode 1) ; keep buffer up to date
@@ -65,6 +66,19 @@
        (side . bottom)
        (slot . 1)
        (window-height . 0.15)))
+
+(add-to-list 'display-buffer-alist
+    '((major-mode . dired-mode) display-buffer-in-side-window
+       (side . left)
+       (slot . 1)
+       (window-height . fit-window-to-buffer)))
+
+
+(add-hook 'dired-mode-hook
+	  (lambda() "Do not show dired detail by default" (dired-hide-details-mode)))
+
+; use one buffer for dired
+(setq dired-kill-when-opening-new-dired-buffer 1)
 
 ; M-x window-toggle-side-windows (show/hide side windows!)
 
