@@ -211,16 +211,14 @@
 (use-package
   eglot
   :ensure nil
-  :config (add-to-list 'eglot-server-programs `((elixir-ts-mode heex-ts-mode elixir-mode) . ("elixir-ls"))))
+  :config (add-to-list 'eglot-server-programs `((elixir-ts-mode heex-ts-mode) . ("elixir-ls"))))
 
+(fset #'jsonrpc--log-event #'ignore)
 
 (use-package
  elixir-ts-mode
  :hook (elixir-ts-mode . eglot-ensure)
  (before-save . eglot-format))
-
-(add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
 ;; make eldoc not pop up the minibuffer
 (setq eldoc-echo-area-use-multiline-p nil)
