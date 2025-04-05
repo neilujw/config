@@ -47,7 +47,7 @@
     pkgs.inotify-tools # phoenix
     pkgs.gcc # emacs
     pkgs.tmux
-    pkgs.mongodb
+    pkgs.podman
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

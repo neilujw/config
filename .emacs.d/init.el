@@ -39,11 +39,9 @@
 ;(global-set-key (kbd "M-o")
 ;		'other-window)
 
-;; (global-set-key (kbd "C-.")
-;; 		'company-complete)
-
 (global-set-key (kbd "C-.")
-		'completion-at-point)
+		'company-complete)
+
 
 (global-set-key (kbd "M-n")
 		'flymake-show-buffer-diagnostics)
@@ -73,6 +71,31 @@
        (slot . 1)
        (window-height . fit-window-to-buffer)))
 
+(defun x-buffer-has-project (buffer action)
+  (with-current-buffer buffer (project-current nil)))
+
+;; (defun x-tab-group-name (buffer alist)
+;;   (with-current-buffer buffer (concat ">" (or (cdr (project-name (project-current "Ungrouped")))))))
+
+(defun x-tab-tab-name (buffer alist)
+  (with-current-buffer buffer
+    (project-name (project-current))))
+
+(defun x-reload-tab-bars (&optional dummy)
+  (interactive)
+  (x-tab-bar-tabs-set (frame-parameter nil 'tabs)))
+
+(defun x-tab-bar-tabs-set (tabs &optional frame)
+  (set-frame-parameter frame 'tabs (seq-sort-by (lambda (el) (alist-get 'group el nil))
+                                                #'string-lessp
+                                                tabs)))
+
+(add-to-list 'display-buffer-alist
+             '(x-buffer-has-project
+               (display-buffer-in-tab display-buffer-reuse-window)
+               (tab-name . x-tab-tab-name)))
+
+(add-hook 'window-selection-change-functions #'x-reload-tab-bars)
 
 (add-hook 'dired-mode-hook
 	  (lambda() "Do not show dired detail by default" (dired-hide-details-mode)))
@@ -141,15 +164,35 @@
 ;;    (set-face-font 'default "-1ASC-Liberation Mono-normal-normal-normal-*-24-*-*-*-m-0-iso10646-1")
 ;;   )
 
-
 (use-package zenburn-theme
   :ensure t
   :config
   (custom-set-faces
    ;; make file references in exunit output visible
    '(ansi-color-black ((t (:background "MediumPurple2" :foreground "MediumPurple2")))))
-
   (load-theme 'zenburn t))
+
+(setq zenburn-override-colors-alist
+      '(("zenburn-bg" . "#111111")
+            ("zenburn-bg-1" . "#4F4F4F")
+            ("zenburn-green+1" . "#D6D4D4")
+            ("zenburn-green-2" . "#5F7F5F")
+            ("zenburn-bg-05" . "#111111")))
+(load-theme 'zenburn t)
+
+;; zenburn colors for mode-line
+;; `(mode-line
+;;   ((,class (:foreground ,zenburn-green+1
+;;                         :background ,zenburn-bg-1
+;;                         :box (:line-width -1 :style released-button)))
+;;    (t :inverse-video t)))
+;; `(mode-line-buffer-id ((t (:foreground ,zenburn-yellow :weight bold))))
+;; `(mode-line-inactive
+;;   ((t (:foreground ,zenburn-green-2
+;;                    :background ,zenburn-bg-05
+;;                    :box (:line-width -1 :style released-button)))))
+
+
 
 (use-package emacs
   :config
