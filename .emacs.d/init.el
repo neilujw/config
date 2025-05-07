@@ -66,6 +66,12 @@
        (window-height . 0.15)))
 
 (add-to-list 'display-buffer-alist
+    '("\\*exunit.*\\*" (display-buffer-reuse-window display-buffer-in-direction)
+       (direction . bottom)
+       (window . root)
+       (window-height . 0.3)))
+
+(add-to-list 'display-buffer-alist
     '((major-mode . dired-mode) display-buffer-in-side-window
        (side . left)
        (slot . 1)
