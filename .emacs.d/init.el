@@ -362,7 +362,8 @@
   (setq helm-mode-fuzzy-match t)
   (setq completion-styles '(flex))
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "M-x") 'helm-M-x))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring))
 
 (use-package helm-git-grep
   :ensure t
