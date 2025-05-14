@@ -181,11 +181,11 @@
 
 (setq zenburn-override-colors-alist
       '(("zenburn-bg" . "#111111") ;; background
-	("zenburn-bg-1" . "#2F2F2F") ;; modeline background ; company complete selection
-	("zenburn-bg+1" . "#4F4F4F") ;; helm selection highlight + window separator + inactive tabs background; company complete background
-	("zenburn-green+1" . "#D6D4D4") ;; modeline foreground
-	("zenburn-green-2" . "#5F7F5F") ;; inactive modeline foreground
-	("zenburn-bg-05" . "#3F3F3F")))  ;; inactive modeline background and line highlight + line number background
+	("zenburn-bg-1" . "#5F5F5F") ;; modeline background + company complete selection 
+	("zenburn-bg+1" . "#3F3F3F") ;; helm selection highlight + window separator + inactive tabs background; company complete background
+	("zenburn-green+1" . "#B3B1B1") ;; modeline foreground
+	))
+
 
 (load-theme 'zenburn t)
 
