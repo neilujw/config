@@ -1,3 +1,4 @@
+(scroll-bar-mode -1)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq visible-bell 1)
@@ -17,12 +18,10 @@
 
 
 ;(hs-minor-mode 1)
-(global-hl-line-mode 1) ; highlight line
+(global-hl-line-mode -1) ; highlight line
 (global-auto-revert-mode 1) ; keep buffer up to date
 
 (global-completion-preview-mode 1)
-
-; (setq project-mode-line nil)
 
 (load-file "~/.emacs.d/ibuffer-groups.el")
 
@@ -33,25 +32,12 @@
 
 (package-initialize)
 
-(global-set-key (kbd "C-x C-b")
-		'ibuffer)
-
-;(global-set-key (kbd "M-o")
-;		'other-window)
-
-(global-set-key (kbd "C-.")
-		'company-complete)
-
-
-(global-set-key (kbd "M-n")
-		'flymake-show-buffer-diagnostics)
-
-(global-set-key (kbd "C-7")
-		'undo)
-
 (add-to-list 'auto-mode-alist '("\\.ex\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.exs\\'" . elixir-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.heex\\'" . heex-ts-mode))
+
+; treats manual buffer switch (e.g. C-x b) the same as programmating switching
+(setq switch-to-buffer-obey-display-actions t)
 
 (add-to-list 'display-buffer-alist
     '("\\*e?shell\\*" display-buffer-in-direction
@@ -67,9 +53,17 @@
 
 (add-to-list 'display-buffer-alist
     '("\\*exunit.*\\*" (display-buffer-reuse-window display-buffer-in-direction)
-       (direction . bottom)
+       (side . right)
        (window . root)
-       (window-height . 0.3)))
+       (window-width . 0.4)))
+
+;; (add-to-list 'display-buffer-alist
+;; 	     '("\\*xref*\\*" (display-buffer-reuse-window display-buffer-in-child-frame)
+;; 	       (child-frame-parameters . (
+;; 					  (left . 0.2)
+;; 					  (top . 0.2)
+;; 					  (width . 0.8)
+;; 					  (height . 0.8)))))
 
 (add-to-list 'display-buffer-alist
     '((major-mode . dired-mode) display-buffer-in-side-window
@@ -87,6 +81,7 @@
   (with-current-buffer buffer
     (project-name (project-current))))
 
+
 (defun x-reload-tab-bars (&optional dummy)
   (interactive)
   (x-tab-bar-tabs-set (frame-parameter nil 'tabs)))
@@ -102,6 +97,7 @@
                (tab-name . x-tab-tab-name)))
 
 (add-hook 'window-selection-change-functions #'x-reload-tab-bars)
+
 
 (add-hook 'dired-mode-hook
 	  (lambda() "Do not show dired detail by default" (dired-hide-details-mode)))
@@ -153,6 +149,11 @@
             :rev :newest
             :branch "main"))
 
+(use-package mix
+  :ensure t
+  :config
+  (add-hook 'elixir-mode-hook 'mix-minor-mode))
+
 ;; from https://www.emacswiki.org/emacs/BackupDirectory#h5o-4
 (setq
    backup-by-copying t      ; don't clobber symlinks
@@ -163,12 +164,10 @@
    kept-old-versions 2
    version-control t)       ; use versioned backups
 
-;; (use-package vscode-dark-plus-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'vscode-dark-plus t)
-;;    (set-face-font 'default "-1ASC-Liberation Mono-normal-normal-normal-*-24-*-*-*-m-0-iso10646-1")
-;;   )
+; (customize-set-variable 'timu-spacegrey-muted-colors t)
+(customize-set-variable 'timu-spacegrey-contrasted-foreground t)
+(customize-set-variable 'timu-spacegrey-mode-line-border t)
+
 
 (use-package zenburn-theme
   :ensure t
@@ -178,17 +177,15 @@
    '(ansi-color-black ((t (:background "MediumPurple2" :foreground "MediumPurple2")))))
   (load-theme 'zenburn t))
 
-
-(setq zenburn-override-colors-alist
-      '(("zenburn-bg" . "#111111") ;; background
-	("zenburn-bg-1" . "#5F5F5F") ;; modeline background + company complete selection 
-	("zenburn-bg+1" . "#3F3F3F") ;; helm selection highlight + window separator + inactive tabs background; company complete background
-	("zenburn-green+1" . "#B3B1B1") ;; modeline foreground
-	))
+;; (setq zenburn-override-colors-alist
+;;       '(("zenburn-bg" . "#111111") ;; background
+;; 	("zenburn-bg-1" . "#5F5F5F") ;; modeline background + company complete selection 
+;; 	("zenburn-bg+1" . "#3F3F3F") ;; helm selection highlight + window separator + inactive tabs background; company complete background
+;; 	("zenburn-green+1" . "#B3B1B1") ;; modeline foreground
+;; 	))
 
 
 (load-theme 'zenburn t)
-
 ;; zenburn colors for mode-line
 ;; `(mode-line
 ;;   ((,class (:foreground ,zenburn-green+1
@@ -202,11 +199,9 @@
 ;;                    :box (:line-width -1 :style released-button)))))
 
 
-
 (use-package emacs
   :config
-  (column-number-mode)
-  )
+  (column-number-mode))
 
 (use-package emacs
   :ensure nil
@@ -217,7 +212,9 @@
 ;; at least once per installation or while changing this list
   (treesit-language-source-alist
    '((heex "https://github.com/phoenixframework/tree-sitter-heex")
-    (elixir "https://github.com/elixir-lang/tree-sitter-elixir"))))
+     (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (eex "https://github.com/connorlay/tree-sitter-eex"))))
  
 
 (use-package dockerfile-mode
@@ -344,6 +341,12 @@
   :defer t
   :ensure t)
 
+(use-package company
+  :defer t
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
+
 ;; (use-package company
 ;;   :defer t
 ;;   :ensure t
@@ -362,6 +365,7 @@
   (setq helm-mode-fuzzy-match t)
   (setq completion-styles '(flex))
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-h SPC") 'helm-mark-ring)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring))
 
@@ -371,7 +375,8 @@
   :config
   (setq  helm-allow-mouse nil)
   :init
-  (global-set-key (kbd "C-c g") 'helm-git-grep))
+  (global-set-key (kbd "C-c g") 'helm-git-grep)
+  (define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch))
 
 
 (use-package which-key
@@ -393,14 +398,6 @@
   :config
   (setq aw-scope 'frame
 	aw-ignore-current t))
-
-(use-package projectile
-  :ensure t
-  :init
-  (setq projectile-project-search-path '("~/ws/" "~/config/"))
-  (projectile-mode +1)
-  :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
 
 (use-package envrc
   :ensure t)
@@ -426,8 +423,41 @@
 (envrc-global-mode)
 
 
-;;; init.el ends here
-; level of treesitter feature, 1-4
-(custom-set-variables
- '(treesit-font-lock-level 4))
+(global-set-key (kbd "C-x C-b")
+		'ibuffer)
 
+;(global-set-key (kbd "M-o")
+;		'other-window)
+
+(global-set-key (kbd "C-.")
+		'company-complete)
+
+(global-set-key (kbd "M-n")
+		'flymake-show-buffer-diagnostics)
+
+(global-set-key (kbd "C-7")
+		'undo)
+
+;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(base16-theme catppuccin-theme company diff-hl dockerfile-mode
+		  dumb-jump envrc erlang exunit flatland-theme
+		  flycheck flymake-json groovy-mode helm helm-git-grep
+		  hurl-mode jq-format json-mode magit markdown-mode
+		  minions mix nix-mode nordic-night-theme nov
+		  projectile smartparens terraform-mode
+		  timu-caribbean-theme timu-macos-theme
+		  timu-rouge-theme timu-spacegrey-theme
+		  tree-sitter-langs treemacs vscode-dark-plus-theme
+		  web-mode yaml-mode zenburn-theme)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-black ((t (:background "MediumPurple2" :foreground "MediumPurple2")))))
